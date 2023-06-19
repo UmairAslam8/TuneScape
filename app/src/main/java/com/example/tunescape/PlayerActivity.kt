@@ -8,10 +8,13 @@ import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.IBinder
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatSeekBar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.tunescape.databinding.ActivityPlayerBinding
+
 
 class PlayerActivity : AppCompatActivity(),ServiceConnection {
 
@@ -49,6 +52,16 @@ class PlayerActivity : AppCompatActivity(),ServiceConnection {
             prevNextSong(increment = true)
         }
 
+        /*binding.seekBarPA.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if(fromUser) musicService!!.mediaPlayer!!.seekTo(progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
+
+        })*/
 
     }
 
@@ -75,6 +88,13 @@ class PlayerActivity : AppCompatActivity(),ServiceConnection {
             musicService!!.mediaPlayer!!.start()
             isPlaying=true
             binding.playPauseBtnPA.setIconResource(R.drawable.pause_icon)
+            musicService!!.showNotification(R.drawable.pause_icon)
+           /* binding.tvSeekBarStart.text = formatDuration(musicService!!.mediaPlayer!!.currentPosition.toLong())
+            binding.tvSeekBarEnd.text = formatDuration(musicService!!.mediaPlayer!!.duration.toLong())
+            binding.seekBarPA.progress = 0
+            binding.seekBarPA.max = musicService!!.mediaPlayer!!.duration
+*/
+
         }catch (e: Exception){
             return
         }
@@ -120,26 +140,12 @@ class PlayerActivity : AppCompatActivity(),ServiceConnection {
 
     }
 
-    private fun setSongPosition(increment: Boolean){
-        if(increment){
-            if(musicListPA.size-1== songPosition)
-                songPosition=0
-            else
-                ++songPosition
-        }else{
-            if(songPosition==0)
-                songPosition= musicListPA.size-1
-            else
-                --songPosition
-        }
-
-    }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
         val binder = service as MusicService.MyBinder
         musicService = binder.currentService()
         createMediaPlayer()
-        musicService!!.showNotification(R.drawable.pause_icon)
+
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {

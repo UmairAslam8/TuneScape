@@ -9,10 +9,12 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tunescape.databinding.ActivityMainBinding
@@ -35,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.Theme_TuneScape)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         //for Nav Drawer
         toggle = ActionBarDrawerToggle(this,binding.root,R.string.open,R.string.close)

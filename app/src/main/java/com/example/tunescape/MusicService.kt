@@ -94,4 +94,24 @@ class MusicService: Service() {
 
 
     }
+    fun createMediaPlayer(){
+        try {
+            if (PlayerActivity.musicService!!.mediaPlayer == null) PlayerActivity.musicService!!.mediaPlayer = MediaPlayer()
+            PlayerActivity.musicService!!.mediaPlayer!!.reset()
+            PlayerActivity.musicService!!.mediaPlayer!!.setDataSource(PlayerActivity.musicListPA[PlayerActivity.songPosition].path)
+            PlayerActivity.musicService!!.mediaPlayer!!.prepare()
+            PlayerActivity.binding.playPauseBtnPA.setIconResource(R.drawable.pause_icon)
+            PlayerActivity.musicService!!.showNotification(R.drawable.pause_icon)
+            /*PlayerActivity.binding.tvSeekBarStart.text = formatDuration(PlayerActivity.musicService!!.mediaPlayer!!.currentPosition.toLong())
+            PlayerActivity.binding.tvSeekBarEnd.text = formatDuration(PlayerActivity.musicService!!.mediaPlayer!!.duration.toLong())
+            PlayerActivity.binding.seekBarPA.progress = 0
+            PlayerActivity.binding.seekBarPA.max = PlayerActivity.musicService!!.mediaPlayer!!.duration
+*/
+
+        }catch (e: Exception){
+            return
+        }
+    }
+
+
 }
